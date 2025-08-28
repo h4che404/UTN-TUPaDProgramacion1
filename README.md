@@ -32,8 +32,8 @@ Organizar, versionar y compartir el avance de la materia **Programación I**, fa
 ---
 
 ## 👥 Participantes 
-- **[Nahuel Lautaro Lemus]** → [GitHub](https://github.com/hero21lb)  
-- **[Nombre 2]** → [GitHub](https://github.com/usuario2)  
+- **[JuanAnglat]** → [GitHub](https://github.com/T-zero12)  
+- **[Nahuel Lautaro Lemus]** → [GitHub](https://github.com/hero21lb)
 - **[Nombre 3]** → [GitHub](https://github.com/usuario3)
 - **[Nombre 4]** → [GitHub](https://github.com/usuario3)
 - **[Nombre 5]** → [GitHub](https://github.com/usuario3)
