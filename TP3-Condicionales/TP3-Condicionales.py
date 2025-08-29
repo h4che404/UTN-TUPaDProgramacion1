@@ -8,7 +8,11 @@ deberá mostrar un mensaje en pantalla que diga “Es mayor de edad”.
 mostrar por pantalla un mensaje que diga “Aprobado”; en caso contrario deberá mostrar el
 mensaje “Desaprobado”.
 '''
-
+nota=input("Ingrese su nota:")
+if nota>=6:
+    print("Aprobado")
+else:
+    print("Desaprobado")
 
 '''  ((Agus))
 3) Escribir un programa que permita ingresar solo números pares. Si el usuario ingresa un
