@@ -51,8 +51,14 @@ else:
 '''  ((Juan Cruz))
 6) El paquete statistics de python contiene funciones que permiten tomar una lista de números
 y calcular la moda, la mediana y la media de dichos números. 
-
 '''
+import random
+from statistics import mode, median, mean
+numeros_aleatorios = [random.randint(1, 100) for i in range(50)]
+print("La lista de numeros aleatorios es:", numeros_aleatorios)
+print("La moda es:", mode(numeros_aleatorios))
+print("La mediana es:", median(numeros_aleatorios))
+print("La media es:", mean(numeros_aleatorios))
 
 '''  ((Joaco))
 7) Escribir un programa que solicite una frase o palabra al usuario. Si el string ingresado
