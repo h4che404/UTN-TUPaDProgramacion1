@@ -38,6 +38,15 @@ pantalla "Por favor, ingrese una contraseña de entre 8 y 14 caracteres". Nota: 
 de la función len() en Python para evaluar la cantidad de elementos que tiene un iterable tal
 como una lista o un string.
 '''
+# Pedir al usuario que ingrese una contraseña
+contraseña = input("Ingrese una contraseña: ")
+
+# Evaluar la longitud de la contraseña
+if 8 <= len(contraseña) <= 14:
+    print("Ha ingresado una contraseña correcta")
+else:
+    print("Por favor, ingrese una contraseña de entre 8 y 14 caracteres")
+
 
 '''  ((Juan Cruz))
 6) El paquete statistics de python contiene funciones que permiten tomar una lista de números
