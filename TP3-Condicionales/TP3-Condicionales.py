@@ -59,6 +59,14 @@ print("La lista de numeros aleatorios es:", numeros_aleatorios)
 print("La moda es:", mode(numeros_aleatorios))
 print("La mediana es:", median(numeros_aleatorios))
 print("La media es:", mean(numeros_aleatorios))
+if mean(numeros_aleatorios) > median(numeros_aleatorios) > mode(numeros_aleatorios):
+    print("La distribución tiene sesgo positivo (a la derecha).")
+elif mean(numeros_aleatorios) < median(numeros_aleatorios) < mode(numeros_aleatorios):
+    print("La distribución tiene sesgo negativo (a la izquierda).")
+elif mean(numeros_aleatorios) == median(numeros_aleatorios) == mode(numeros_aleatorios):
+    print("La distribución no tiene sesgo (simétrica).")
+else:
+    print("No se puede determinar un sesgo claro con estos valores.")
 
 '''  ((Joaco))
 7) Escribir un programa que solicite una frase o palabra al usuario. Si el string ingresado
