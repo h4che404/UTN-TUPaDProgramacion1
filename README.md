@@ -37,8 +37,3 @@ Organizar, versionar y compartir el avance de la materia **Programación I**, fa
 - **[Nombre 3]** → [GitHub](https://github.com/usuario3)
 - **[Nombre 4]** → [GitHub](https://github.com/usuario3)
 - **[Nombre 5]** → [GitHub](https://github.com/usuario3)
-
-
-hola
-hola panchito
-soy agus
