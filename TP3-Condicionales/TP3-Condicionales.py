@@ -82,6 +82,11 @@ termina con vocal, añadir un signo de exclamación al final e imprimir el strin
 pantalla; en caso contrario, dejar el string tal cual lo ingresó el usuario e imprimirlo por
 pantalla.
 '''
+texto = input("Ingrese una frase o palabra: ")
+vocales = "aeiouAEIOU"
+if texto and texto[-1] in vocales:
+    texto += "!"
+print("Resultado:", texto)
 
 '''  ((Nahuel))
 8) Escribir un programa que solicite al usuario que ingrese su nombre y el número 1, 2 o 3
