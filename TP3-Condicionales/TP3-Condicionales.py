@@ -37,6 +37,17 @@ siguientes categorías pertenece:
 ● Adulto/a joven: mayor o igual que 18 años y menor que 30 años.
 ● Adulto/a: mayor o igual que 30 años.
 '''
+#pedirle al usuario que ingrese su edad y clasificarlo segun su edad
+edad = int(input("ingrese su edad"))
+if edad >= 0 and edad <= 12:
+    print("eres un niño/a")
+elif edad >= 13 and edad <= 18:
+    print("eres un adolecente")
+elif edad >= 18 and edad <= 30:
+    print("Eres adulto/a joven")
+elif edad >= 30:
+    print("eres un adulto mayor")
+else: print("eres un mayor de edad")
 
 '''  ((Juan Cruz))
 5) Escribir un programa que permita introducir contraseñas de entre 8 y 14 caracteres
