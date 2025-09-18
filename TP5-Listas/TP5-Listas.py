@@ -1,15 +1,13 @@
 #Práctico 5: Listas
 
 '''1) Crear una lista con los números del 1 al 100 que sean múltiplos de 4. Utilizar la función
-range.  Juan'''
+range.'''
 
-multi_de_4 = list(range(4, 101, 4))
-print(multi_de_4)
 
 
 '''2) Crear una lista con cinco elementos (colocar los elementos que más te gusten) y mostrar el
 penúltimo. ¡Puedes hacerlo como se muestra en los videos o bien investigar cómo funciona el
-indexing con números negativos! Juan'''
+indexing con números negativos!'''
 
 
 
