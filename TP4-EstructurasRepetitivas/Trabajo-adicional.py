@@ -3,6 +3,9 @@ Escribir un programa que pida al usuario una palabra y la muestre por
 pantalla 10 veces.
 '''
 
+from tracemalloc import start, stop
+
+
 palabra = str(input("Ingrese una palabra"))
 for i in range (10):
     print(palabra)
@@ -133,3 +136,7 @@ for i in range(n):
 print(f"Total de triángulos equiláteros: {equilateros}")
 print(f"Total de triángulos isósceles: {isosceles}")
 print(f"Total de triángulos escalenos: {escalenos}")
+
+for i in range(start, stop):
+    # código a ejecutar en cada iteración
+    pass
