@@ -48,17 +48,27 @@ print(numeros)
 pantalla los dos primeros.'''
 numeros = list(range(10,31,5))
 print(numeros[0:2]) 
+numeros.append(35)
+numeros = list(range(10,40,5))
 
 
 '''7) Reemplazar los dos valores centrales (índices 1 y 2) de la lista “autos” por dos nuevos valores
 cualesquiera.
 autos = ["sedan", "polo", "suran", "gol"]'''
 
+autos = ["sedan", "polo", "suran", "gol"]
+autos[1:3] = ["camioneta","4x4"]
+print(autos)
 
 
 '''8) Crear una lista vacía llamada "dobles" y agregar el doble de 5, 10 y 15 usando append
 directamente. Imprimir la lista resultante por pantalla.'''
 
+dobles = []
+dobles.append(5*2)
+dobles.append(10*2)
+dobles.append(15*2)
+print(dobles)
 
 
 '''9) Dada la lista “compras”, cuyos elementos representan los productos comprados por
