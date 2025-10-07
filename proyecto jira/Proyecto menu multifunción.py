@@ -8,6 +8,7 @@ def abrir_calculadora():
     ventana_secundaria.title("Calculadora")
     ventana_secundaria.geometry("320x450")
     ventana_secundaria.resizable(False, False)
+    ventana_secundaria.configure(bg="#DEF4C6")
 
     # Variable vinculada al cuadro de texto
     entrada_var = tk.StringVar()
@@ -72,9 +73,10 @@ def abrir_tareas():
     ventana_secundaria.title("Tareas")
     ventana_secundaria.geometry("400x400")
     ventana_secundaria.resizable(False, False)
+    ventana_secundaria.configure(bg="#DEF4C6")
 
     # Aquí puedes agregar los componentes para gestionar tareas
-    tk.Label(ventana_secundaria, text="Gestión de Tareas (en construcción)").pack(pady=20)
+    tk.Label(ventana_secundaria, text="Gestión de Tareas (en construcción)", bg="#DEF4C6").pack(pady=20)
 
     # Botón para cerrar
     tk.Button(ventana_secundaria, text="Cerrar", command=ventana_secundaria.destroy).pack(pady=10)
@@ -85,10 +87,11 @@ ventana_principal = tk.Tk()
 ventana_principal.title("Menú multifunción")
 ventana_principal.geometry("500x500")
 ventana_principal.resizable(False, False)
+ventana_principal.configure(bg="#DEF4C6")
 
-tk.Label(ventana_principal, text="Opciones:", font=("Segoe UI", 20)).pack(pady=20)
-tk.Button(ventana_principal, text="Abrir calculadora",font=("Segoe UI", 20), command=abrir_calculadora).pack(pady=10)
-tk.Button(ventana_principal, text="Abrir gestor de tareas",font=("Segoe UI", 20), command=abrir_tareas).pack(pady=10)
+tk.Label(ventana_principal, text="Opciones:", font=("Segoe UI", 20), bg="#DEF4C6", fg="#1B512D").pack(pady=20)
+tk.Button(ventana_principal, text="Abrir calculadora", font=("Segoe UI", 20), bg="#73E2A7", fg="#1B512D", command=abrir_calculadora).pack(pady=10)
+tk.Button(ventana_principal, text="Abrir gestor de tareas",font=("Segoe UI", 20), bg="#73E2A7", fg="#1B512D", command=abrir_tareas).pack(pady=10)
 
 ventana_principal.mainloop()
 
