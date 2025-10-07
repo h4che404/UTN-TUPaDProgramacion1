@@ -86,9 +86,9 @@ ventana_principal.title("Menú multifunción")
 ventana_principal.geometry("500x500")
 ventana_principal.resizable(False, False)
 
-tk.Label(ventana_principal, text="Opciones:").pack(pady=20)
-tk.Button(ventana_principal, text="Abrir calculadora", command=abrir_calculadora).pack(pady=10)
-tk.Button(ventana_principal, text="Abrir gestor de tareas", command=abrir_tareas).pack(pady=10)
+tk.Label(ventana_principal, text="Opciones:", font=("Segoe UI", 20)).pack(pady=20)
+tk.Button(ventana_principal, text="Abrir calculadora",font=("Segoe UI", 20), command=abrir_calculadora).pack(pady=10)
+tk.Button(ventana_principal, text="Abrir gestor de tareas",font=("Segoe UI", 20), command=abrir_tareas).pack(pady=10)
 
 ventana_principal.mainloop()
 
