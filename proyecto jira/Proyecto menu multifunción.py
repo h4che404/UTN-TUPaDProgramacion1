@@ -96,13 +96,7 @@ tk.Button(ventana_principal, text="Abrir gestor de tareas",font=("Segoe UI", 20)
 ventana_principal.mainloop()
 
 #craer logica para craer tarea
-def crear_tarea(tareas, descripcion):
-    tarea = {
-        "descripcion": descripcion,
-        "completada": False
-    }
-    tareas.append(tarea)
-    print(f"Tarea '{descripcion}' creada.")
+
 
 tareas = []
 
