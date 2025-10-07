@@ -71,16 +71,10 @@ for i in range(100, -1, -1):
         print(i)
 
 
-7) Crea un programa que calcule la suma de todos los números comprendidos entre 0 y un
-número entero positivo indicado por el usuario.
+7)C
 
 
-num2 = int(input("Ingrese un numero entero: "))
-contador1 = 0
-for i in range(0, num2 + 1):
-    contador1 += i
-print(f"La suma de los numeros comprendidos entre 0 y {num2} es: {contador1}")
-
+n
 
 8) Escribe un programa que permita al usuario ingresar 100 números enteros. Luego, el
 programa debe indicar cuántos de estos números son pares, cuántos son impares, cuántos son
@@ -124,11 +118,4 @@ print(media)
 
 
 10) Escribe un programa que invierta el orden de los dígitos de un número ingresado por el
-usuario. Ejemplo: si el usuario ingresa 547, el programa debe mostrar 745.
-'''
-
-
-numero = str(input("ingrese un numero entero"))
-
-numero = numero[::-1]
-print(numero)
+usuario. Ejemplo: si el usuario ingresa 547, el programa debe mostrar 745
