@@ -80,6 +80,10 @@ def abrir_tareas():
     entrada_tarea = tk.StringVar()
     entrada = tk.Entry(ventana_secundaria, textvariable=entrada_tarea, font=("Arial", 20), justify="right")
     entrada.pack(pady=10, fill="x", padx=10)
+    tk.Label(ventana_secundaria, text="Descripción:", bg="#DEF4C6", font=("Segoe UI", 14)).pack(pady=10)
+    entrada_descripcion = tk.StringVar()
+    entrada2 = tk.Entry(ventana_secundaria, textvariable=entrada_descripcion, font=("Arial", 20), justify="right")
+    entrada2.pack(pady=10, fill="x", padx=10)
 
 
     # Botón para añadir tarea
@@ -109,7 +113,6 @@ ventana_principal.mainloop()
 #craer logica para craer tarea
 
 
-tareas = []
 
 opcion_tarea = input("Ingresa la opción:")
 
@@ -122,7 +125,6 @@ if opcion_tarea == 0:
 
 
 
-tareas = []
 
 def crear_tarea():
     nombre = input("Ingrese el nombre de la tarea: ").strip()
