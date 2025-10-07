@@ -109,3 +109,57 @@ ventana_principal.mainloop()
 #craer logica para craer tarea
 
 
+tareas = []
+
+opcion_tarea = input("Ingresa la opción:")
+
+if opcion_tarea == 0:
+    tarea_nueva = input("Ingresa la tarea:")
+    tareas.append(tarea_nueva)
+
+
+
+
+
+
+tareas = []
+
+def crear_tarea():
+    nombre = input("Ingrese el nombre de la tarea: ").strip()
+    descripcion = input("Ingrese una breve descripción de la tarea: ").strip()
+
+    if nombre == "" or descripcion == "":
+        print(" Debes completar todos los campos.\n")
+    else:
+        tareas.append({"nombre": nombre, "descripcion": descripcion})
+        print(f" Tarea '{nombre}' creada correctamente.\n")
+
+def ver_tareas():
+    if not tareas:
+        print("No hay tareas creadas todavía.\n")
+    else:
+        print(" Lista de tareas:")
+        for i, tarea in enumerate(tareas, start=1):
+            print(f"{i}. {tarea['nombre']}")
+        print()
+
+# Programa principal
+while True:
+    print("=== MENÚ DE TAREAS ===")
+    print("1. Crear tarea")
+    print("2. Ver tareas")
+    print("3. Salir")
+    opcion = input("Seleccione una opción: ")
+
+    if opcion == "1":
+        crear_tarea()
+    elif opcion == "2":
+        ver_tareas()
+    elif opcion == "3":
+        print("Saliendo del programa...")
+        break
+    else:
+        print("Opción no válida. Intente nuevamente.\n")
+
+
+
