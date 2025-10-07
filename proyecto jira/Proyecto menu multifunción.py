@@ -104,5 +104,11 @@ def crear_tarea(tareas, descripcion):
     tareas.append(tarea)
     print(f"Tarea '{descripcion}' creada.")
 
+tareas = []
 
+opcion_tarea = input("Ingresa la opción:")
+
+if opcion_tarea == 0:
+    tarea_nueva = input("Ingresa la tarea:")
+    tareas.append(tarea_nueva)
 
