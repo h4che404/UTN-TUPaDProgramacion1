@@ -163,3 +163,11 @@ while True:
 
 
 
+fechas = []
+
+opcion_fecha = int(input("Ingrese una opcion: "))
+#Si se creo la tarea correctamente, se puede agregar una fecha
+if opcion_fecha == 1:
+    fecha = input("Ingrese la fecha (DD/MM/AAAA): ")
+    fechas.append(fecha)
+    print("Fecha agregada exitosamente.")
