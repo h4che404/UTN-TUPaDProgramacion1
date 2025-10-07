@@ -66,7 +66,18 @@ def abrir_calculadora():
     tk.Button(ventana_secundaria, text="Cerrar", command=ventana_secundaria.destroy).pack(pady=10)
 
 
+def abrir_tareas():
+    # Crear la ventana de tareas
+    ventana_secundaria = tk.Toplevel()
+    ventana_secundaria.title("Tareas")
+    ventana_secundaria.geometry("400x400")
+    ventana_secundaria.resizable(False, False)
 
+    # Aquí puedes agregar los componentes para gestionar tareas
+    tk.Label(ventana_secundaria, text="Gestión de Tareas (en construcción)").pack(pady=20)
+
+    # Botón para cerrar
+    tk.Button(ventana_secundaria, text="Cerrar", command=ventana_secundaria.destroy).pack(pady=10)
 
 
 # Ventana principal
@@ -77,6 +88,7 @@ ventana_principal.resizable(False, False)
 
 tk.Label(ventana_principal, text="Opciones:").pack(pady=20)
 tk.Button(ventana_principal, text="Abrir calculadora", command=abrir_calculadora).pack(pady=10)
+tk.Button(ventana_principal, text="Abrir gestor de tareas", command=abrir_tareas).pack(pady=10)
 
 ventana_principal.mainloop()
 
