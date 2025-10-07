@@ -1,6 +1,6 @@
 import tkinter as tk
 
-
+tareas = []
 
 def abrir_calculadora():
     # Crear la ventana de calculadora
@@ -66,7 +66,6 @@ def abrir_calculadora():
     # Botón para cerrar
     tk.Button(ventana_secundaria, text="Cerrar", command=ventana_secundaria.destroy).pack(pady=10)
 
-
 def abrir_tareas():
     # Crear la ventana de tareas
     ventana_secundaria = tk.Toplevel()
@@ -76,8 +75,20 @@ def abrir_tareas():
     ventana_secundaria.configure(bg="#DEF4C6")
 
     # Aquí puedes agregar los componentes para gestionar tareas
-    tk.Label(ventana_secundaria, text="Gestión de Tareas (en construcción)", bg="#DEF4C6").pack(pady=20)
+    tk.Label(ventana_secundaria, text="Gestión de Tareas", bg="#DEF4C6",font=("Segoe UI", 20)).pack(pady=20)
+    tk.Label(ventana_secundaria, text="Ingresa una nueva tarea:", bg="#DEF4C6", font=("Segoe UI", 14)).pack(pady=10)
+    entrada_tarea = tk.StringVar()
+    entrada = tk.Entry(ventana_secundaria, textvariable=entrada_tarea, font=("Arial", 20), justify="right")
+    entrada.pack(pady=10, fill="x", padx=10)
 
+
+    # Botón para añadir tarea
+    def agregar_tarea():
+        tarea = entrada_tarea.get()
+        if tarea:
+            tareas.append(tarea)
+            entrada_tarea.set("")
+    tk.Button(ventana_secundaria, text="Agregar Tarea", font=("Segoe UI", 14), bg="#73E2A7", fg="#1B512D", command=agregar_tarea).pack(pady=10)
     # Botón para cerrar
     tk.Button(ventana_secundaria, text="Cerrar", command=ventana_secundaria.destroy).pack(pady=10)
 
@@ -97,12 +108,4 @@ ventana_principal.mainloop()
 
 #craer logica para craer tarea
 
-
-tareas = []
-
-opcion_tarea = input("Ingresa la opción:")
-
-if opcion_tarea == 0:
-    tarea_nueva = input("Ingresa la tarea:")
-    tareas.append(tarea_nueva)
 
