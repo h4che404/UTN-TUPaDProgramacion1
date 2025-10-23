@@ -1,4 +1,4 @@
 Lapicera,120.5,30
-Cuaderno,250.0,50
-Mochila,1500.0,20
-lapiz, 2000, 2
+Cuaderno,450.0,10
+Regla,80.0,50
+juan,2000.0,1
