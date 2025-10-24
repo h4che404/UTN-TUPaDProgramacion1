@@ -126,3 +126,12 @@ print(media)
 
 """Escribe un programa que invierta el orden de los dígitos de un número ingresado por el
 usuario. Ejemplo: si el usuario ingresa 547, el programa debe mostrar 745 """
+
+numeronuevo = 0
+numusuario = int(input("Ingrese un número entero:"))
+cifras = len(str(numusuario))
+for i in range(cifras):
+    digito = numusuario % 10
+    numeronuevo = numeronuevo * 10 + digito
+    numusuario //= 10
+print(f"La inversa es {numeronuevo}.")
