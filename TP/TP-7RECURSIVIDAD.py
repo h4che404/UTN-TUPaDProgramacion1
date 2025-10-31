@@ -97,3 +97,4 @@ def contar_digito(numero, digito):
 numero = int(input("Ingrese un número: "))
 dig = int(input("Ingrese el dígito a contar: "))
 print(f"El dígito {dig} aparece {contar_digito(numero, dig)} veces.")
+
