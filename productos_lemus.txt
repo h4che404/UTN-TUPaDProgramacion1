@@ -1,0 +1,4 @@
+manzana,2000,3
+banana,2800,5
+mandarina,1800,2
+salame,2000,3
