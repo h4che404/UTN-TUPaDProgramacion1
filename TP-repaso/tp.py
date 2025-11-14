@@ -297,4 +297,4 @@ while True:
         break
     
     else:
-        print("Opción no válida. Por favor, seleccione una opción del 1 al 4.")k 
+        print("Opción no válida. Por favor, seleccione una opción del 1 al 4.")

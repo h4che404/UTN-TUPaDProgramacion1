@@ -2,33 +2,73 @@ import csv
 import os
 
 CSV_FILE = "catalogo.csv"
-
+CSV_HEADERS = ["NOMBRE", "CANTIDAD"]
 
 # ----------------------------
 # Utilidades (VALIDACIONES)
 # ----------------------------
 
+
 def normalizar_titulo(t: str) -> str:
-    """
-    Devuelve el título normalizado para comparación.
-    Requisitos:
-    - Quitar espacios sobrantes intermedios y extremos.
-    - Pasar a minúsculas.
-    : implementar y devolver el string normalizado.
-    """
+    
     t = t.strip()
     t = ' '.join(t.split())
     t = t.lower()
     return t 
 
+def normalizar_texto(texto):
+    """Devuelve el texto sin espacios extras y en minúsculas."""
+    if texto is None:
+        return ""
+    # Mapa de acentos a caracteres sin acento
+    mapa_acentos = {
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+        'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
+        'ñ': 'n', 'Ñ': 'N', 'ü': 'u', 'Ü': 'U'   
+    }
+    for acentuada, sin_acentuar in mapa_acentos.items():
+        texto = texto.replace(acentuada, sin_acentuar)
+        
+    return str(texto).strip().lower()
+
+def parse_int_flexible(valor):
+    #Convierte el valor en entero.
+    #Elimina separadores (., ) y devuelve 0 si no es válido.
+    if valor is None:
+        return 0
+    s = str(valor).strip()
+    # Manejo de cadena vacía
+    if s == "":
+        return 0
+    # Eliminación de separadores comunes y verificación de dígitos
+    s = s.replace(" ", "").replace(",", "").replace(".", "")
+    if s.lstrip("-").isdigit():
+        return int(s)
+    return 0
+
+def input_int(mensaje, permitir_vacio=False, valor_defecto=None):
+    """Pide un número entero y valida"""
+    while True:
+        entrada = input(mensaje).strip()
+        if entrada == "" and permitir_vacio:
+            return valor_defecto
+        entrada_limpia = entrada.replace(" ", "").replace(",", "").replace(".", "")
+        if entrada_limpia.lstrip("-").isdigit():
+            return parse_int_flexible(entrada_limpia)
+        print("Error: ingrese un número entero válido.")
+
+def input_str_solo_letras(mensaje):
+    while True:
+        entrada = input(mensaje).strip()
+        entrada = normalizar_texto(entrada).strip()
+        if not entrada:
+            print("Error: La entrada no puede estar vacía. Inténtelo de nuevo.")
+            continue
+        if entrada.isalpha():
+            return entrada
+        print("Error: Ingrese solo letras (caracteres alfabéticos).")
 
 def titulo_valido(t: str) -> bool:
-    """
-    Un título es válido si, tras normalizar, no queda vacío.
-    implementar y devolver True/False.
-    """
-
-    
     if normalizar_titulo(t) == "":
         return True
     else:  
@@ -36,15 +76,6 @@ def titulo_valido(t: str) -> bool:
 
 
 def pedir_titulo(msg: str) -> str:
-    """
-    Pide un título por input hasta que sea válido según las reglas del enunciado.
-    Requisitos:
-    - No vacío.
-    - Comparación insensible a mayúsculas y con espacios normalizados.
-    - Debe devolver el título ya normalizado para mostrar/guardar prolijo.
-    implementar bucle de pedido y validación.
-    """
-
     titulo = input(msg).strip()
     if titulo_valido(titulo):
         return normalizar_titulo(titulo)
@@ -52,11 +83,6 @@ def pedir_titulo(msg: str) -> str:
 
 
 def pedir_entero_no_negativo(msg: str) -> int:
-    """
-    Pide un entero >= 0 (usar validaciones simples como str.isdigit()).
-    Debe volver a pedir si el valor no es válido.
-    implementar bucle de pedido y validación; devolver int.
-    """
     while True:
         valor = input(msg).strip()
         if valor.isdigit():
@@ -69,21 +95,33 @@ def pedir_entero_no_negativo(msg: str) -> int:
 # Persistencia CSV
 # ----------------------------
 
-def cargar_catalogo_desde_csv() -> list[dict]:
-    """
-    Carga el catálogo desde CSV si existe.
-    Formato: encabezado TITULO,CANTIDAD
-    Requisitos mínimos:
-    - Si no existe, devolver lista vacía.
-    - Saltar filas inválidas.
-    - Convertir CANTIDAD a int cuando corresponda.
-    implementar lectura real con csv.DictReader.
-    """
+def archivo_existe(ruta):
+    """Devuelve True si el archivo existe y es accesible."""
+    return os.path.isfile(ruta)
+
+def crear_csv_ejemplo(ruta):
+    """Crea un CSV de ejemplo si no existe."""
+    # Datos de ejemplo 
+    muestra = [
+        {"TITULO": "Cien años de soledad", "CANTIDAD": 5},
+        {"TITULO": "Don Quijote de la Mancha", "CANTIDAD": 2},
+        {"TITULO": "La sombra del viento", "CANTIDAD": 0},
+    ]
+    # Guardar CSV de ejemplo
+    with open(ruta, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=CSV_HEADERS)
+        writer.writeheader()
+        for fila in muestra:
+            writer.writerow(fila)
+            
+
+
+def cargar_catalogo_desde_csv(ruta) -> list[dict]:
     catalogo: list[dict] = []
     if not os.path.isfile(CSV_FILE):
         return catalogo
     else:
-        with open(CSV_FILE, mode='r', newline='', encoding='utf-8') as archivo_csv:
+        with open(ruta, mode='r', newline='', encoding='utf-8') as archivo_csv:
             lector = csv.DictReader(archivo_csv)
             for fila in lector:
                 titulo = fila['TITULO'].strip()
@@ -94,59 +132,18 @@ def cargar_catalogo_desde_csv() -> list[dict]:
         return catalogo
 
 
-def guardar_catalogo_a_csv(catalogo: list[dict]) -> None:
-    """
-    Guarda el catálogo al CSV (sobrescribe).
-    Columnas: TITULO,CANTIDAD (con encabezado)
-    Requisitos:
-    - Escribir siempre encabezado.
-    - Asegurar que CANTIDAD sea entero no negativo.
-    implementar escritura real con csv.DictWriter.
-    """
 
-    with open(CSV_FILE, mode='w', newline='', encoding='utf-8') as archivo_csv:
-        encabezado = ['TITULO', 'CANTIDAD']
-        escritor = csv.DictWriter(archivo_csv, fieldnames=encabezado)
-
-        escritor.writeheader()  # escribe TITULO,CANTIDAD
-
-        for libro in catalogo:
-            titulo = libro['TITULO'].strip()
-            cantidad = int(libro['CANTIDAD'])
-
-            # Validación: cantidad no negativa
-            if cantidad < 0:
-                cantidad = 0
-
-            escritor.writerow({'TITULO': titulo, 'CANTIDAD': cantidad})
-catalogo = cargar_catalogo_desde_csv()
-catalogo.append({'TITULO': 'Nuevo Libro', 'CANTIDAD': 3})
-guardar_catalogo_a_csv(catalogo)
 
 # ----------------------------
 # Búsquedas y reglas de negocio
 # ----------------------------
 
-def buscar_indice_por_titulo(catalogo: list[dict], titulo_busqueda: str) -> int:
-    """
-    Devuelve el índice del libro cuyo título coincide (comparación normalizada).
-    Si no existe, devuelve -1.
-    implementar recorrido y comparación con normalización.
-    """
-    titulo_busqueda_normalizado = normalizar_titulo(titulo_busqueda)
-    for indice, libro in enumerate(catalogo):
-        titulo_libro_normalizado = normalizar_titulo(libro['TITULO'])
-        if titulo_libro_normalizado == titulo_busqueda_normalizado:
-            return indice
-    return -1
+def buscar_indice_por_titulo(catalogo: list[dict], titulo_busqueda: str):
+    return [p for p in catalogo if normalizar_texto(titulo_busqueda) in normalizar_texto(p["TITULO"])]
 
 
 
 def existe_titulo(catalogo: list[dict], titulo: str) -> bool:
-    """
-    True si el título ya existe en el catálogo (comparación normalizada).
-    implementar usando buscar_indice_por_titulo.
-    """
     indice = buscar_indice_por_titulo(catalogo, titulo)
     if indice != -1:
         return True
@@ -159,28 +156,20 @@ def existe_titulo(catalogo: list[dict], titulo: str) -> bool:
 # ----------------------------
 
 def ingresar_titulos_multiples(catalogo: list[dict]) -> list[dict]:
-    """
-    1) Ingresar títulos (múltiples):
-       - Pedir cuántos libros cargar.
-       - Por cada uno: TITULO (no vacío, no duplicado) y CANTIDAD (>=0).
-       - Guardar automáticamente tras cambios.
-    Debe devolver el catálogo actualizado.
-    """
     # pedir cantidad de registros a ingresar
     while True:
-        cant_raw = input("¿Cuántos libros querés cargar? ")
+        cant_raw = input_int("¿Cuántos libros querés cargar? ")
         n = int(cant_raw)
         if n < 0:
             print("Debe ser un número entero >= 0.")
             continue
         else:
             break
-
     for i in range(1, n + 1):
         print(f"\nLibro #{i}")
         # título (no vacío, no duplicado)
         while True:
-            titulo = input("  TITULO: ").strip()
+            titulo = input_str_solo_letras("  TITULO: ").strip()
             if not titulo:
                 print("  El título no puede estar vacío.")
                 continue
@@ -188,10 +177,9 @@ def ingresar_titulos_multiples(catalogo: list[dict]) -> list[dict]:
                 print("  Ya existe un libro con ese título (no se permiten duplicados).")
                 continue
             break
-
         # cantidad (entero >= 0)
         while True:
-            cant_raw = input("  CANTIDAD (>=0): ").strip()
+            cant_raw = input_int("  CANTIDAD (>=0): ")
             cantidad = int(cant_raw)
             if cantidad < 0:
                 print("  Debe ser >= 0.")
@@ -202,56 +190,41 @@ def ingresar_titulos_multiples(catalogo: list[dict]) -> list[dict]:
 
         # agregar y guardar automáticamente
         catalogo.append({"TITULO": titulo, "CANTIDAD": cantidad})
-        guardar_catalogo_a_csv(catalogo)
         print("  ✔ Guardado.")
 
     return catalogo
 
 
+
 def ingresar_ejemplares(catalogo: list[dict]) -> list[dict]:
-    """
-    2) Ingresar ejemplares a un título existente (sumar cantidad).
-    Requisitos:
-    - Verificar existencia del título.
-    - Sumar cantidad (>=0).
-    - Guardar automáticamente tras cambios.
-    Debe devolver el catálogo actualizado.
-    implementar.
-    """
-    print("→ Ingresar ejemplares: PENDIENTE DE IMPLEMENTAR")
     if not catalogo:
         print("Catálogo vacío.")
         return catalogo
-    titulo = normalizar_titulo(input("Título al que querés sumar ejemplares: "))
+    titulo = normalizar_titulo(input_str_solo_letras("Título al que querés sumar ejemplares: "))
     idx = buscar_indice_por_titulo(catalogo, titulo)
     if idx is None:
         print("No existe ese título.")
         return catalogo
     while True:
-        try:
             cantidad = int(input("Cantidad a sumar (>=0): ").strip())
+            for libro in idx:
+                print(f"{libro.__len__}Título: {libro['TITULO']}, Cantidad: {libro['CANTIDAD']}")
+            indice = input("Ingrese el índice del libro a actualizar: ").strip()
+            if not indice.isdigit() or int(indice) < 0 or int(indice) >= len(catalogo):
+                print("Índice inválido. Intente nuevamente.")
+                continue
+            idx = int(indice)
             if cantidad < 0:
                 print("La cantidad no puede ser negativa.")
                 continue
             break
-        except ValueError:
-            print("Ingresá un entero válido.")
+    
     catalogo[idx]["CANTIDAD"] += cantidad
-    guardar_catalogo_a_csv(catalogo)
     print("Actualizado y guardado.")
     return catalogo
-    return catalogo 
 
 
 def mostrar_catalogo(catalogo: list[dict]) -> None:
-    """
-    3) Mostrar catálogo completo (título + stock).
-    Requisitos:
-    - Formato simple, un libro por línea.
-    - Indicar si el catálogo está vacío.
-     implementar.
-    """
-    print("→ Mostrar catálogo: PENDIENTE DE IMPLEMENTAR")
     if not catalogo:
         print("El catálogo está vacío.")
         return
@@ -260,14 +233,6 @@ def mostrar_catalogo(catalogo: list[dict]) -> None:
 
 
 def consultar_disponibilidad(catalogo: list[dict]) -> None:
-    """
-    4) Consultar disponibilidad de un título (mostrar cuántos ejemplares hay).
-    Requisitos:
-    - Verificar existencia del título.
-    - Mostrar cantidad disponible.
-    implementar.
-    """
-    print("→ Consultar disponibilidad: PENDIENTE DE IMPLEMENTAR")
     titulo = normalizar_titulo(input("Ingrese el título a consultar: "))
     idx = buscar_indice_por_titulo(catalogo, titulo)
     if idx == -1:
@@ -278,13 +243,6 @@ def consultar_disponibilidad(catalogo: list[dict]) -> None:
 
 
 def listar_agotados(catalogo: list[dict]) -> None:
-    """
-    5) Listar sólo títulos con CANTIDAD == 0.
-    Requisitos:
-    - Mostrar lista o indicar que no hay agotados.
-    implementar.
-    """
-    print("→ Listar agotados: PENDIENTE DE IMPLEMENTAR")
     agotados = [libro for libro in catalogo if libro['CANTIDAD'] == 0]
     if not agotados:
         print("No hay títulos agotados.")
@@ -296,16 +254,6 @@ def listar_agotados(catalogo: list[dict]) -> None:
 
 
 def agregar_titulo(catalogo: list[dict]) -> list[dict]:
-    """
-    6) Agregar título individual (validar duplicados) con cantidad inicial.
-    Requisitos:
-    - TITULO válido y único.
-    - CANTIDAD inicial >= 0.
-    - Guardar automáticamente tras cambios.
-    Debe devolver el catálogo actualizado.
-    implementar.
-    """
-    print("→ Agregar título: PENDIENTE DE IMPLEMENTAR")
     while True:
         titulo = input("Ingrese el título a agregar: ").strip()
         if not titulo:
@@ -324,19 +272,12 @@ def agregar_titulo(catalogo: list[dict]) -> list[dict]:
             print("Ingresá un entero válido.")
             break
     catalogo.append({"TITULO": titulo, "CANTIDAD": cantidad})
-    guardar_catalogo_a_csv(catalogo)
     print("Título agregado y guardado.")
     return catalogo
 
 
 def actualizar_ejemplares_prestamo_devolucion(catalogo: list[dict]) -> list[dict]:
-    """
-    7) Actualizar ejemplares:
-       - Préstamo: restar 1 sólo si CANTIDAD > 0.
-       - Devolución: sumar 1.
-       - Guardar automáticamente tras cambios.
-    Debe devolver el catálogo actualizado.
-    """
+
     if not catalogo:
         print("El catálogo está vacío.")
         return catalogo
@@ -376,7 +317,6 @@ def actualizar_ejemplares_prestamo_devolucion(catalogo: list[dict]) -> list[dict
         return catalogo
 
     # Guardar cambios automáticamente
-    guardar_catalogo_a_csv(catalogo)
     print("📁 Cambios guardados en catalogo.csv.")
 
     return catalogo
@@ -403,11 +343,11 @@ def mostrar_menu() -> None:
 
 def main() -> None:
     print("📚 Iniciando sistema de Biblioteca…")
-    catalogo: list[dict] = cargar_catalogo_desde_csv()
-    if len(catalogo) == 0:
-        print("ℹ️ Catálogo vacío o CSV no encontrado.")
-    else:
-        print(f"✅ Catálogo cargado. {len(catalogo)} título(s).")
+    if not archivo_existe(CSV_FILE):
+        print("No se encontró el archivo base, se creará uno de ejemplo.")
+        crear_csv_ejemplo(CSV_FILE)
+    catalogo: list[dict] = cargar_catalogo_desde_csv(CSV_FILE)
+    print(f"\n{len(catalogo)} países cargados correctamente.\n")
 
     while True:
         mostrar_menu()
